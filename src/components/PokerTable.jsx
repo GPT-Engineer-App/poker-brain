@@ -73,6 +73,7 @@ const PokerTable = () => {
       potSize: 0,
       botAction: null,
     });
+    startNewHand();
   };
 
   useEffect(() => {
