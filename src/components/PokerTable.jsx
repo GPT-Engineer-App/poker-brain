@@ -58,6 +58,7 @@ const PokerTable = () => {
     };
 
     const botAction = calculateBotAction(updatedState);
+
     setGameState({
       ...updatedState,
       botAction,
@@ -73,7 +74,6 @@ const PokerTable = () => {
       potSize: 0,
       botAction: null,
     });
-    startNewHand();
   };
 
   useEffect(() => {
