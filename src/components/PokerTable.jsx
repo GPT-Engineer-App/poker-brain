@@ -20,13 +20,38 @@ const PokerTable = () => {
     botAction: null,
   }));
 
-  const handlePlayerAction = (action) => {
-    const updatedState = { ...gameState, playerAction: action };
-    setGameState(updatedState);
-
-    const botAction = "call";
-    setGameState({ ...updatedState, botAction });
+  const calculateBotAction = (state) => {
+    return "call";
   };
+
+  const handlePlayerAction = (action) => {
+    const updatedState = {
+      ...gameState,
+      playerAction: action,
+      potSize: action === "raise" ? gameState.potSize + 10 : gameState.potSize,
+    };
+
+    const botAction = calculateBotAction(updatedState);
+    setGameState({
+      ...updatedState,
+      botAction,
+      potSize: botAction === "raise" ? updatedState.potSize + 10 : updatedState.potSize,
+    });
+  };
+
+  const startNewHand = () => {
+    setGameState({
+      communityCards: dealCards(5),
+      playerHand: dealCards(2),
+      botHand: dealCards(2),
+      potSize: 0,
+      botAction: null,
+    });
+  };
+
+  useEffect(() => {
+    startNewHand();
+  }, []);
 
   return (
     <Box>
