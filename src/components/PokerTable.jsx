@@ -17,11 +17,28 @@ const PokerTable = () => {
         {}
         <Text fontSize="xl">Pot Size: {gameState?.potSize || 0}</Text>
         <HStack spacing={4}>
-          <Button leftIcon={<FaCoins />} onClick={() => {}}>
+          <Button
+            leftIcon={<FaCoins />}
+            onClick={() => {
+              console.log("Call button clicked");
+            }}
+          >
             Call
           </Button>
-          <Button onClick={() => {}}>Fold</Button>
-          <Button onClick={() => {}}>Raise</Button>
+          <Button
+            onClick={() => {
+              console.log("Fold button clicked");
+            }}
+          >
+            Fold
+          </Button>
+          <Button
+            onClick={() => {
+              console.log("Raise button clicked");
+            }}
+          >
+            Raise
+          </Button>
         </HStack>
       </VStack>
     </Box>
