@@ -21,7 +21,33 @@ const PokerTable = () => {
   }));
 
   const calculateBotAction = (state) => {
-    return "call";
+    const { communityCards, botHand } = state;
+    const allCards = [...communityCards, ...botHand];
+
+    const ranks = allCards.map((card) => card[0]);
+    const suits = allCards.map((card) => card[1]);
+    const rankCounts = ranks.reduce((counts, rank) => {
+      counts[rank] = (counts[rank] || 0) + 1;
+      return counts;
+    }, {});
+
+    const hasPair = Object.values(rankCounts).some((count) => count >= 2);
+    const hasTwoPair = Object.values(rankCounts).filter((count) => count >= 2).length >= 2;
+    const hasThreeOfAKind = Object.values(rankCounts).some((count) => count >= 3);
+
+    const suitCounts = suits.reduce((counts, suit) => {
+      counts[suit] = (counts[suit] || 0) + 1;
+      return counts;
+    }, {});
+    const hasFlushDraw = Object.values(suitCounts).some((count) => count >= 4);
+
+    if (hasThreeOfAKind || hasTwoPair) {
+      return "raise";
+    } else if (hasPair || hasFlushDraw) {
+      return "call";
+    } else {
+      return "fold";
+    }
   };
 
   const handlePlayerAction = (action) => {
